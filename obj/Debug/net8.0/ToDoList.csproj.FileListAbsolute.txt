@@ -12,3 +12,4 @@ C:\Users\Альберт\Desktop\ToDoList\obj\Debug\net8.0\refint\ToDoList.dll
 C:\Users\Альберт\Desktop\ToDoList\obj\Debug\net8.0\ToDoList.pdb
 C:\Users\Альберт\Desktop\ToDoList\obj\Debug\net8.0\ToDoList.genruntimeconfig.cache
 C:\Users\Альберт\Desktop\ToDoList\obj\Debug\net8.0\ref\ToDoList.dll
+C:\Users\Альберт\Desktop\ToDoList\obj\Debug\net8.0\ToDoList.sourcelink.json

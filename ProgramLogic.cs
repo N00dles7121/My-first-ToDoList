@@ -7,7 +7,7 @@ namespace ToDoList
 {
     static public class ProgramLogic
     {
-        public static void ShowTaskList(Dictionary<int, string> taskList)
+        public static void ShowTaskList(List<string> taskList)
         {
             if (taskList.Count == 0)
             {
@@ -18,23 +18,27 @@ namespace ToDoList
             System.Console.WriteLine("----------------------");
             System.Console.WriteLine("Hese's your task list:");
 
-            foreach (var task in taskList)
+            for (int i = 0; i < taskList.Count; i++)
             {
-                Console.WriteLine(task.Key + " - " + task.Value);
+                    Console.WriteLine(i + 1 + " - " + taskList[i]);
             }
 
             System.Console.WriteLine("----------------------");
         }
 
-        public static void RemoveTask(Dictionary<int, string> taskList)
+        static private bool CheckForDuplicates(List<string> tasks, string task) {
+            return tasks.Contains(task);
+        }
+
+        public static void RemoveTask(List<string> taskList)
         {
             ShowTaskList(taskList);
 
             System.Console.WriteLine("Input task number to delete.");
-            if (int.TryParse(Console.ReadLine(), out int key) && taskList.ContainsKey(key))
+            if (int.TryParse(Console.ReadLine(), out int taskNumber) && taskList.Count >= taskNumber)
             {
-                taskList.Remove(key);
-                System.Console.WriteLine($"Task #{key} was succesfully removed.");
+                taskList.RemoveAt(taskNumber - 1);
+                System.Console.WriteLine($"\nTask #{taskNumber} was succesfully removed.");
                 System.Console.Write("Would you like to add another task (Y/N): ");
 
                 if (Console.ReadLine().ToUpper() == "Y")
@@ -48,7 +52,7 @@ namespace ToDoList
             {
                 do
                 {
-                    System.Console.WriteLine("Wrong input.\n1 - try again.\n0 - main menu.");
+                    System.Console.WriteLine("\nWrong input.\n1 - try again.\n0 - main menu.");
                     if (Console.ReadLine() == "1")
                     {
                         RemoveTask(taskList);
@@ -62,7 +66,7 @@ namespace ToDoList
             }
         }
 
-        public static void AddTask(Dictionary<int, string> taskList)
+        public static void AddTask(List<string> taskList)
         {
             string menuNavigation = "";
             bool isTrying = true;
@@ -71,9 +75,9 @@ namespace ToDoList
             {
                 System.Console.WriteLine("Please type in the task:");
                 string taskToAdd = Console.ReadLine();
-                if (taskToAdd == "")
+                if (taskToAdd == "" || CheckForDuplicates(taskList, taskToAdd))
                 {
-                    System.Console.WriteLine("Task can not be empty.\n1 - try again.\n0 - main menu.");
+                    System.Console.WriteLine("\nTask can not be empty or this task already exists.\n1 - try again.\n0 - main menu.");
                     menuNavigation = Console.ReadLine();
                     if (menuNavigation == "1")
                     {
@@ -83,9 +87,9 @@ namespace ToDoList
                     else break;
                 }
 
-                taskList.Add(taskList.Count + 1, taskToAdd);
+                taskList.Add(taskToAdd);
 
-                System.Console.WriteLine("Your task succesfully added.");
+                System.Console.WriteLine("\nYour task succesfully added.");
                 System.Console.Write("Would you like to add another task (Y/N): ");
                 menuNavigation = Console.ReadLine().ToUpper();
                 if (menuNavigation == "Y")
@@ -99,5 +103,6 @@ namespace ToDoList
             Console.Clear();
             return;
         }
+
     }
 }

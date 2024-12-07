@@ -11,7 +11,7 @@ namespace ToDoList
     {
         static void Main()
         {
-            Dictionary<int, string> taskList = new Dictionary<int, string>();
+            List<string> taskList = new List<string>();
             bool isOnline = true;
 
             System.Console.WriteLine("Hello to my to do list.\n----------------------------");

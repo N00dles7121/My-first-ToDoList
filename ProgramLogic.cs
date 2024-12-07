@@ -49,7 +49,7 @@ namespace ToDoList
                 System.Console.WriteLine($"\nTask #{taskNumber} was succesfully removed.");
                 System.Console.Write("Would you like to add another task (Y/N): ");
 
-                // Call method again and stop it after completion or return to main menu
+                // Call method again and stop previous after completion or return to main menu
                 if (Console.ReadLine().ToUpper() == "Y")
                 {
                     RemoveTask(taskList);
@@ -59,31 +59,30 @@ namespace ToDoList
             }
 
             // Ask if user wants to input another option or return to main menu
-            else
+            System.Console.WriteLine("\nWrong input.\n1 - try again.\n0 - main menu.");
+            if (Console.ReadLine() == "1")
             {
-                    System.Console.WriteLine("\nWrong input.\n1 - try again.\n0 - main menu.");
-                    if (Console.ReadLine() == "1")
-                    {
-                        RemoveTask(taskList);
-                        return;
-                    }
-                    else
-                    {
-                        return;
-                    }
+                RemoveTask(taskList);
+                return;
             }
+            else return;
         }
 
         public static void AddTask(List<string> taskList)
         {
             string menuNavigation = "";
 
+            // Request user input
             System.Console.WriteLine("Please type in the task:");
             string taskToAdd = Console.ReadLine();
+
+            // Check for valid input and add task to the list or ask another valid input
             if (taskToAdd == "" || CheckForDuplicates(taskList, taskToAdd))
             {
                 System.Console.WriteLine("\nTask can not be empty or this task already exists.\n1 - try again.\n0 - main menu.");
                 menuNavigation = Console.ReadLine();
+
+                // Call method again and stop previous after completion or return to main menu
                 if (menuNavigation == "1")
                 {
                     AddTask(taskList);
@@ -92,11 +91,14 @@ namespace ToDoList
                 else return;
             }
 
+            // Add task to the list if input is valid
             taskList.Add(taskToAdd);
-
             System.Console.WriteLine("\nYour task succesfully added.");
+
+            // Ask for repeated operation or return to main menu
             System.Console.Write("Would you like to add another task (Y/N): ");
             menuNavigation = Console.ReadLine().ToUpper();
+
             if (menuNavigation == "Y")
             {
                 AddTask(taskList);

@@ -3,6 +3,7 @@ using System.Text;
 using System.IO;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
+using ToDoList.scripts;
 
 
 namespace ToDoList
@@ -13,6 +14,8 @@ namespace ToDoList
         {
             List<string> taskList = new List<string>();
             bool isOnline = true;
+
+            DataFileIO.ReadData(taskList);
 
             System.Console.WriteLine("Hello to my to do list.\n----------------------------");
 
@@ -60,6 +63,7 @@ namespace ToDoList
             } while (isOnline);
 
             System.Console.WriteLine("\nThanks for visiting. Press any key to exit.");
+            DataFileIO.WriteData(taskList);
             Console.ReadKey();
         }
     }

@@ -38,7 +38,7 @@ namespace ToDoList
             ShowTaskList(taskList);
 
             // Request user inputs
-            System.Console.WriteLine("Input task number to delete.");
+            System.Console.Write("Input task number to delete.");
 
             // Check if user input is valid option
             if (int.TryParse(Console.ReadLine(), out int taskNumber) && taskNumber > 0 && taskNumber <= taskList.Count)
@@ -47,7 +47,7 @@ namespace ToDoList
                 // Remove task at specified index and ask for repeated removal
                 taskList.RemoveAt(taskNumber - 1);
                 System.Console.WriteLine($"\nTask #{taskNumber} was succesfully removed.");
-                System.Console.Write("Would you like to add another task (Y/N): ");
+                System.Console.Write("Would you like to remove another task (Y/N): ");
 
                 // Call method again and stop previous after completion or return to main menu
                 if (Console.ReadLine().ToUpper() == "Y")
@@ -105,6 +105,44 @@ namespace ToDoList
                 return;
             }
             else return;
+        }
+
+        public static void EditTask(List<string> taskList)
+        {
+            string menuNavigation = "";
+            ShowTaskList(taskList);
+
+            System.Console.Write("Input task number to edit: ");
+            if (int.TryParse(Console.ReadLine(), out int taskNumber) && taskNumber > 0 && taskNumber <= taskList.Count)
+            {
+                // Remove task at specified index and ask for repeated removal
+                System.Console.WriteLine($"\nType in new task body: ");
+                string newBody = Console.ReadLine();
+
+                if (newBody == "" || CheckForDuplicates(taskList, newBody))
+                {
+                    System.Console.WriteLine("\nTask can not be empty or this task already exists.\n1 - try again.\n0 - main menu.");
+                    menuNavigation = Console.ReadLine();
+
+                    if (menuNavigation == "1")
+                    {
+                        EditTask(taskList);
+                        return;
+                    }
+                    else return;
+                }
+
+                taskList[taskNumber - 1] = newBody;
+                System.Console.Write("Would you like to edit another task (Y/N): ");
+
+                // Call method again and stop previous after completion or return to main menu
+                if (Console.ReadLine().ToUpper() == "Y")
+                {
+                    EditTask(taskList);
+                    return;
+                }
+                else return;
+            }
         }
     }
 }

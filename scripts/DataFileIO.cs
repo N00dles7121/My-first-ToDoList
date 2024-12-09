@@ -12,8 +12,8 @@ namespace ToDoList.scripts
     {
         static public List<string> ReadData(List<string> taskList)
         {
+            // Read all data stored on the file
             StreamReader reader = new StreamReader(@"C:\Users\Альберт\Desktop\ToDoList\TaskList.txt");
-
             try
             {
                 string tempList = reader.ReadLine();
@@ -39,8 +39,9 @@ namespace ToDoList.scripts
 
         static public void WriteData(List<string> taskList)
         {
-            FileStream fileStream = new FileStream(@"C:\Users\Альберт\Desktop\ToDoList\TaskList.txt", FileMode.Open);
 
+            // Flush all data stored on the file
+            FileStream fileStream = new FileStream(@"C:\Users\Альберт\Desktop\ToDoList\TaskList.txt", FileMode.Open);
             try
             {
                 fileStream.SetLength(0);
@@ -55,8 +56,8 @@ namespace ToDoList.scripts
                 fileStream.Close();
             }
 
+            // Write new data on the file
             StreamWriter writer = new StreamWriter(@"C:\Users\Альберт\Desktop\ToDoList\TaskList.txt");
-
             try
             {
                 foreach (var task in taskList)

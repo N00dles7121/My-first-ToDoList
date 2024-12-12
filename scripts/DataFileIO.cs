@@ -5,15 +5,17 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ToDoList.scripts
 {
     public class DataFileIO
     {
+
         static public List<string> ReadData(List<string> taskList)
         {
             // Read all data stored on the file
-            StreamReader reader = new StreamReader(@"C:\Users\Альберт\Desktop\ToDoList\TaskList.txt");
+            StreamReader reader = new StreamReader(Path.GetFullPath(@"TaskList.txt"));
             try
             {
                 string tempList = reader.ReadLine();
@@ -24,10 +26,13 @@ namespace ToDoList.scripts
                     tempList = reader.ReadLine();
                 }
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
-                System.Console.WriteLine("Exception occured. Unable to read file.");
-                throw new ApplicationException("Exception: ", ex);
+                System.Console.WriteLine($"Error. Input-Output attempt failed.Exception message: {ex.Message}");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
             }
             finally
             {
@@ -41,15 +46,18 @@ namespace ToDoList.scripts
         {
 
             // Flush all data stored on the file
-            FileStream fileStream = new FileStream(@"C:\Users\Альберт\Desktop\ToDoList\TaskList.txt", FileMode.Open);
+            FileStream fileStream = new FileStream(Path.GetFullPath(@"TaskList.txt"), FileMode.Open);
             try
             {
                 fileStream.SetLength(0);
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
-                System.Console.WriteLine("Exception occured. Unable to flush file.");
-                throw new ApplicationException("Exception: ", ex);
+                System.Console.WriteLine($"Error. Input-Output attempt failed.Exception message: {ex.Message}");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
             }
             finally
             {
@@ -57,7 +65,7 @@ namespace ToDoList.scripts
             }
 
             // Write new data on the file
-            StreamWriter writer = new StreamWriter(@"C:\Users\Альберт\Desktop\ToDoList\TaskList.txt");
+            StreamWriter writer = new StreamWriter(Path.GetFullPath(@"TaskList.txt"));
             try
             {
                 foreach (var task in taskList)
@@ -65,10 +73,13 @@ namespace ToDoList.scripts
                     writer.WriteLine(task);
                 }
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
-                System.Console.WriteLine("Exception occured. Unable to write on file.");
-                throw new ApplicationException("Exception: ", ex);
+                System.Console.WriteLine($"Error. Input-Output attempt failed.Exception message: {ex.Message}");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
             }
             finally
             {

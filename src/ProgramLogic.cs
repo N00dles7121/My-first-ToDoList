@@ -28,11 +28,6 @@ namespace ToDoList
             System.Console.WriteLine("----------------------");
         }
 
-        static private bool CheckForDuplicates(List<string> tasks, string task)
-        {
-            return tasks.Contains(task);
-        }
-
         public static void RemoveTask(List<string> taskList)
         {
             ShowTaskList(taskList);
@@ -77,7 +72,7 @@ namespace ToDoList
             string taskToAdd = Console.ReadLine();
 
             // Check for valid input and add task to the list or ask another valid input
-            if (taskToAdd == "" || CheckForDuplicates(taskList, taskToAdd))
+            if (taskToAdd == "" || taskList.Contains(taskToAdd))
             {
                 System.Console.WriteLine("\nTask can not be empty or this task already exists.\n1 - try again.\n0 - main menu.");
                 menuNavigation = Console.ReadLine();
@@ -119,7 +114,7 @@ namespace ToDoList
                 System.Console.WriteLine($"\nType in new task body: ");
                 string newBody = Console.ReadLine();
 
-                if (newBody == "" || CheckForDuplicates(taskList, newBody))
+                if (newBody == "" || taskList.Contains(newBody))
                 {
                     System.Console.WriteLine("\nTask can not be empty or this task already exists.\n1 - try again.\n0 - main menu.");
                     menuNavigation = Console.ReadLine();

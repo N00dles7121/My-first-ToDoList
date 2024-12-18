@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace ToDoList
 {
-    static public class ProgramLogic
+    public static class ProgramLogic
     {
         public static void ShowTaskList(List<string> taskList)
         {

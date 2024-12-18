@@ -11,19 +11,16 @@ namespace ToDoList.scripts
 {
     public class DataFileIO
     {
-
-        static public List<string> ReadData(List<string> taskList)
+        public static void ReadData(List<string> taskList)
         {
             // Read all data stored on the file
-            StreamReader reader = new StreamReader(Path.GetFullPath(@"TaskList.txt"));
+
+            string[] tempList = File.ReadAllLines(@"TaskList.txt");
             try
             {
-                string tempList = reader.ReadLine();
-
-                while (tempList != null)
+                foreach (var item in tempList)
                 {
-                    taskList.Add(tempList);
-                    tempList = reader.ReadLine();
+                    taskList.Add(item);
                 }
             }
             catch (IOException ex)
@@ -34,23 +31,14 @@ namespace ToDoList.scripts
             {
                 System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
             }
-            finally
-            {
-                reader.Close();
-            }
-
-            return taskList;
         }
 
         static public void WriteData(List<string> taskList)
         {
-
-            // Flush all data stored on the file
-            FileStream fileStream = new FileStream(Path.GetFullPath(@"TaskList.txt"), FileMode.Open);
             try
             {
-                fileStream.SetLength(0);
-            }
+                File.WriteAllLines(@"TaskList.txt", taskList);
+            } 
             catch (IOException ex)
             {
                 System.Console.WriteLine($"Error. Input-Output attempt failed.Exception message: {ex.Message}");
@@ -59,32 +47,46 @@ namespace ToDoList.scripts
             {
                 System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
             }
-            finally
-            {
-                fileStream.Close();
-            }
+            // // Flush all data stored on the file
+            // FileStream fileStream = new FileStream(Path.GetFullPath(@"TaskList.txt"), FileMode.Open);
+            // try
+            // {
+            //     fileStream.SetLength(0);
+            // }
+            // catch (IOException ex)
+            // {
+            //     System.Console.WriteLine($"Error. Input-Output attempt failed.Exception message: {ex.Message}");
+            // }
+            // catch (UnauthorizedAccessException ex)
+            // {
+            //     System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
+            // }
+            // finally
+            // {
+            //     fileStream.Close();
+            // }
 
-            // Write new data on the file
-            StreamWriter writer = new StreamWriter(Path.GetFullPath(@"TaskList.txt"));
-            try
-            {
-                foreach (var task in taskList)
-                {
-                    writer.WriteLine(task);
-                }
-            }
-            catch (IOException ex)
-            {
-                System.Console.WriteLine($"Error. Input-Output attempt failed.Exception message: {ex.Message}");
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
-            }
-            finally
-            {
-                writer.Close();
-            }
+            // // Write new data on the file
+            // StreamWriter writer = new StreamWriter(Path.GetFullPath(@"TaskList.txt"));
+            // try
+            // {
+            //     foreach (var task in taskList)
+            //     {
+            //         writer.WriteLine(task);
+            //     }
+            // }
+            // catch (IOException ex)
+            // {
+            //     System.Console.WriteLine($"Error. Input-Output attempt failed.Exception message: {ex.Message}");
+            // }
+            // catch (UnauthorizedAccessException ex)
+            // {
+            //     System.Console.WriteLine($"Error. Unauthorized Access Exception. Error message: {ex.Message}");
+            // }
+            // finally
+            // {
+            //     writer.Close();
+            // }
         }
     }
 }
